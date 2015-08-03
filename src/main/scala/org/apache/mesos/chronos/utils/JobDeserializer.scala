@@ -151,6 +151,10 @@ class JobDeserializer extends JsonDeserializer[BaseJob] {
         if (containerNode.has("network") && containerNode.get("network") != null)
           NetworkMode.withName(containerNode.get("network").asText)
         else NetworkMode.HOST
+      val privileged =
+          if (containerNode.has("privileged") && containerNode.get("privileged") != null)
+            containerNode.get("privileged").asBoolean(false)
+          else false
 
       // TODO: Add support for more containers when they're added.
       val volumes = scala.collection.mutable.ListBuffer[Volume]()
@@ -171,7 +175,7 @@ class JobDeserializer extends JsonDeserializer[BaseJob] {
         if (containerNode.has("forcePullImage") && containerNode.get("forcePullImage") != null)
           Try(containerNode.get("forcePullImage").asText.toBoolean).getOrElse(false)
         else false
-      container = DockerContainer(containerNode.get("image").asText, volumes, networkMode, forcePullImage)
+      container = DockerContainer(containerNode.get("image").asText, privileged, volumes, networkMode, forcePullImage)
     }
 
     val constraints = scala.collection.mutable.ListBuffer[Constraint]()

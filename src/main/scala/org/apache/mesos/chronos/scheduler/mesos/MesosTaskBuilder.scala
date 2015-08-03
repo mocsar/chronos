@@ -168,6 +168,7 @@ class MesosTaskBuilder @Inject()(val conf: SchedulerConfiguration) {
     builder.setType(ContainerInfo.Type.DOCKER)
     builder.setDocker(DockerInfo.newBuilder()
       .setImage(job.container.image)
+      .setPrivileged(job.container.privileged)
       .setNetwork(DockerInfo.Network.valueOf(job.container.network.toString.toUpperCase))
       .setForcePullImage(job.container.forcePullImage)
       .build()).build

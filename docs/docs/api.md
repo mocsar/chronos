@@ -227,6 +227,18 @@ Chronos by adding the `forcePullImage` boolean to your `container` configuration
 Chronos will default to not doing a `docker pull` if the image is already found on the executing node. The alternative approach is to use versions/tags for
 your images.
 
+Docker containers can be started in privileged mode (also called kernel mode) by adding the `privileged` boolean to your container configuration.
+
+```json
+{
+  "container": {
+    "privileged": true
+  }
+}
+```
+
+The default value of the `privileged` property is `false` which means the container will run in user mode.
+
 ## Updating Task Progress
 
 Task progress can be updated by providing the number of additional elements processed. This will increment the existing count of elements processed.
@@ -309,7 +321,7 @@ When specifying the `command` field in your job hash, use `url-runner.bash` (mak
 | `scheduleTimeZone`    | The time zone for the given schedule, specified in the [tz database](https://en.wikipedia.org/wiki/Tz_database) format. | -                              |
 | `parents`             | An array of parent jobs for a dependent job.  If specified, `schedule` must not be specified.            | -                              |
 | `runAsUser`           | Mesos will run the job as this user, if specified.                                                       | `--user`                       |
-| `container`           | This contains the subfields for the Docker container: `type` (required), `image` (required), `forcePullImage` (optional), `network` (optional), and `volumes` (optional).          | -                              |
+| `container`           | This contains the subfields for the Docker container: `type` (required), `image` (required), `privileged` (optional), `forcePullImage` (optional), `network` (optional), and `volumes` (optional).          | -                              |
 | `dataJob`             | Toggles whether the job tracks data (number of elements processed)                                       | `false`                        |
 | `environmentVariables`| An array of environment variables passed to the Mesos executor. For Docker containers, these are also passed to Docker using the `-e` flag. | -                              |
 | `constraints`         | Control where jobs run. Each constraint is compared against the [attributes of a Mesos slave](http://mesos.apache.org/documentation/attributes-resources/). See [Constraints](#constraints). | -                              |

@@ -28,8 +28,9 @@ class SerDeTest extends SpecificationWithJUnit {
         Volume(None, "container/dir", None)
       )
 
+      val privileged = false
       val forcePullImage = false
-      val container = DockerContainer("dockerImage", volumes, NetworkMode.BRIDGE, forcePullImage)
+      val container = DockerContainer("dockerImage", privileged, volumes, NetworkMode.BRIDGE, forcePullImage)
 
       val arguments = Seq(
         "-testOne"
@@ -68,8 +69,9 @@ class SerDeTest extends SpecificationWithJUnit {
         Volume(None, "container/dir", None)
       )
 
+      val privileged = false
       val forcePullImage = true
-      val container = DockerContainer("dockerImage", volumes, NetworkMode.HOST, forcePullImage)
+      val container = DockerContainer("dockerImage", privileged, volumes, NetworkMode.HOST, forcePullImage)
 
       val arguments = Seq(
         "-testOne"
